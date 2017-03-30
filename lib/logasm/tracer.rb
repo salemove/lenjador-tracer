@@ -30,7 +30,8 @@ class Logasm
     def start_span(operation_name, child_of: nil, start_time: Time.now, tags: {}, **)
       context =
         if child_of
-          SpanContext.create_from_parent_context(child_of)
+          parent_context = child_of.respond_to?(:context) ? child_of.context : child_of
+          SpanContext.create_from_parent_context(parent_context)
         else
           SpanContext.create_parent_context
         end
