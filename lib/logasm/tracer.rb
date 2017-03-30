@@ -20,22 +20,23 @@ class Logasm
     # Starts a new span.
     #
     # @param operation_name [String] The operation name for the Span
-    # @param child_of [SpanContext] SpanContext that acts as a parent to
+    # @param child_of [SpanContext, Span] SpanContext that acts as a parent to
     #        the newly-started Span. If a Span instance is provided, its
-    #        .span_context is automatically substituted.
+    #        context is automatically substituted.
     # @param start_time [Time] When the Span started, if not now
     # @param tags [Hash] Tags to assign to the Span at start time
     #
     # @return [Span] The newly-started Span
-    def start_span(operation_name, child_of: nil, start_time: Time.now, **)
+    def start_span(operation_name, child_of: nil, start_time: Time.now, tags: {}, **)
       context =
         if child_of
-          SpanContext.create_from_parent_context(child_of)
+          parent_context = child_of.respond_to?(:context) ? child_of.context : child_of
+          SpanContext.create_from_parent_context(parent_context)
         else
           SpanContext.create_parent_context
         end
 
-      Span.new(context, operation_name, @logger, start_time: start_time)
+      Span.new(context, operation_name, @logger, start_time: start_time, tags: tags)
     end
 
     # Inject a SpanContext into the given carrier

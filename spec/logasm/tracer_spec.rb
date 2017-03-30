@@ -32,13 +32,13 @@ RSpec.describe Logasm::Tracer do
           expect(span.context.trace_id).to_not be_nil
         end
 
-        it 'has does not have parent_id' do
+        it 'does not have parent_id' do
           expect(span.context.parent_id).to be_nil
         end
       end
     end
 
-    context 'when a child span' do
+    context 'when a child span context' do
       let(:root_span) { tracer.start_span(root_operation_name) }
       let(:span) { tracer.start_span(operation_name, child_of: root_span.context) }
       let(:root_operation_name) { 'root-operation-name' }
@@ -64,7 +64,39 @@ RSpec.describe Logasm::Tracer do
           expect(span.context.trace_id).to_not be_nil
         end
 
-        it 'has does not have parent_id' do
+        it 'does not have parent_id' do
+          expect(span.context.parent_id).to_not be_nil
+        end
+      end
+    end
+
+    context 'when a child span' do
+      let(:root_span) { tracer.start_span(root_operation_name) }
+      let(:span) { tracer.start_span(operation_name, child_of: root_span) }
+      let(:root_operation_name) { 'root-operation-name' }
+
+      it 'logs span start' do
+        span
+        expect(logger).to have_received(:info).with("Span [#{operation_name}] started",
+          trace: {
+            id: span.context.trace_id,
+            parent_id: span.context.parent_id,
+            span_id: span.context.span_id,
+            operation_name: operation_name
+          }
+        )
+      end
+
+      context 'span context' do
+        it 'has span_id' do
+          expect(span.context.span_id).to_not be_nil
+        end
+
+        it 'has trace_id' do
+          expect(span.context.trace_id).to_not be_nil
+        end
+
+        it 'does not have parent_id' do
           expect(span.context.parent_id).to_not be_nil
         end
       end

@@ -4,11 +4,12 @@ class Logasm
     class Span
       attr_reader :context
 
-      def initialize(context, operation_name, logger, start_time: Time.now)
+      def initialize(context, operation_name, logger, start_time: Time.now, tags: {})
         @context = context
         @operation_name = operation_name
         @logger = logger
         @start_time = start_time
+        @tags = tags
         @logger.info "Span [#{@operation_name}] started", trace_information
       end
 
@@ -18,7 +19,7 @@ class Logasm
       # @param value [String, Numeric, Boolean] the value of the tag. If it's not
       # a String, Numeric, or Boolean it will be encoded with to_s
       def set_tag(key, value)
-        self
+        @tags = @tags.merge(key => value)
       end
 
       # Set a baggage item on the span
@@ -70,7 +71,7 @@ class Logasm
             parent_id: @context.parent_id,
             span_id: @context.span_id,
             operation_name: @operation_name
-          }.merge(additional_fields)
+          }.merge(additional_fields).merge(@tags)
         }
       end
     end

@@ -30,5 +30,18 @@ RSpec.describe Logasm::Tracer::Span do
         }
       )
     end
+
+    context 'when tag set through #set_tag' do
+      let(:tag_name) { 'tag-name' }
+      let(:tag_value) { 'tag-value' }
+
+      it 'includes tags in the span information' do
+        span.set_tag(tag_name, tag_value)
+        span.finish(end_time: end_time)
+        expect(logger).to have_received(:info).with("Span [#{operation_name}] finished",
+          trace: a_hash_including(tag_name => tag_value)
+        )
+      end
+    end
   end
 end
