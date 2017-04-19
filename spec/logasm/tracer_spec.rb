@@ -128,18 +128,18 @@ RSpec.describe Logasm::Tracer do
 
   describe '#extract' do
     let(:operation_name) { 'operator-name' }
-    let(:carrier) do
-      {
-        'trace-id' => trace_id,
-        'parent-id' => parent_id,
-        'span-id' => span_id
-      }
-    end
     let(:trace_id) { 'trace-id' }
     let(:parent_id) { 'parent-id' }
     let(:span_id) { 'span-id' }
 
     context 'when FORMAT_TEXT_MAP' do
+      let(:carrier) do
+        {
+          'trace-id' => trace_id,
+          'parent-id' => parent_id,
+          'span-id' => span_id
+        }
+      end
       let(:span_context) { tracer.extract(described_class::FORMAT_TEXT_MAP, carrier) }
 
       it 'has trace-id' do
@@ -152,6 +152,61 @@ RSpec.describe Logasm::Tracer do
 
       it 'has span-id' do
         expect(span_context.span_id).to eq(span_id)
+      end
+
+      context 'when trace-id missing' do
+        let(:trace_id) { nil }
+
+        it 'returns nil' do
+          expect(span_context).to eq(nil)
+        end
+      end
+
+      context 'when span-id missing' do
+        let(:span_id) { nil }
+
+        it 'returns nil' do
+          expect(span_context).to eq(nil)
+        end
+      end
+    end
+
+    context 'when FORMAT_RACK' do
+      let(:carrier) do
+        {
+          'X-Trace-Id' => trace_id,
+          'X-Trace-Parent-Id' => parent_id,
+          'X-Trace-Span-Id' => span_id
+        }
+      end
+      let(:span_context) { tracer.extract(described_class::FORMAT_RACK, carrier) }
+
+      it 'has trace-id' do
+        expect(span_context.trace_id).to eq(trace_id)
+      end
+
+      it 'has parent-id' do
+        expect(span_context.parent_id).to eq(parent_id)
+      end
+
+      it 'has span-id' do
+        expect(span_context.span_id).to eq(span_id)
+      end
+
+      context 'when X-Trace-Id missing' do
+        let(:trace_id) { nil }
+
+        it 'returns nil' do
+          expect(span_context).to eq(nil)
+        end
+      end
+
+      context 'when X-Trace-Span-Id missing' do
+        let(:span_id) { nil }
+
+        it 'returns nil' do
+          expect(span_context).to eq(nil)
+        end
       end
     end
   end
