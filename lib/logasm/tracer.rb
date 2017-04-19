@@ -67,17 +67,25 @@ class Logasm
     def extract(format, carrier)
       case format
       when FORMAT_TEXT_MAP
-        SpanContext.new(
-          trace_id: carrier['trace-id'],
-          parent_id: carrier['parent-id'],
-          span_id: carrier['span-id']
-        )
+        trace_id = carrier['trace-id']
+        parent_id = carrier['parent-id']
+        span_id = carrier['span-id']
+
+        if trace_id && span_id
+          SpanContext.new(trace_id: trace_id, parent_id: parent_id, span_id: span_id)
+        else
+          nil
+        end
       when FORMAT_RACK
-        SpanContext.new(
-          trace_id: carrier['X-Trace-Id'],
-          parent_id: carrier['X-Trace-Parent-Id'],
-          span_id: carrier['X-Trace-Span-Id']
-        )
+        trace_id = carrier['X-Trace-Id']
+        parent_id = carrier['X-Trace-Parent-Id']
+        span_id = carrier['X-Trace-Span-Id']
+
+        if trace_id && span_id
+          SpanContext.new(trace_id: trace_id, parent_id: parent_id, span_id: span_id)
+        else
+          nil
+        end
       else
         @logger.error "Logasm::Tracer with format #{format} is not supported yet"
         nil
