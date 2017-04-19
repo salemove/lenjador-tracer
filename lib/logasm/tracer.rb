@@ -77,9 +77,9 @@ class Logasm
           nil
         end
       when FORMAT_RACK
-        trace_id = carrier['X-Trace-Id']
-        parent_id = carrier['X-Trace-Parent-Id']
-        span_id = carrier['X-Trace-Span-Id']
+        trace_id = carrier['HTTP_X_TRACE_ID']
+        parent_id = carrier['HTTP_X_TRACE_PARENT_ID']
+        span_id = carrier['HTTP_X_TRACE_SPAN_ID']
 
         if trace_id && span_id
           SpanContext.new(trace_id: trace_id, parent_id: parent_id, span_id: span_id)

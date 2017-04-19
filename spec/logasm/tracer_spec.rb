@@ -174,9 +174,9 @@ RSpec.describe Logasm::Tracer do
     context 'when FORMAT_RACK' do
       let(:carrier) do
         {
-          'X-Trace-Id' => trace_id,
-          'X-Trace-Parent-Id' => parent_id,
-          'X-Trace-Span-Id' => span_id
+          'HTTP_X_TRACE_ID' => trace_id,
+          'HTTP_X_TRACE_PARENT_ID' => parent_id,
+          'HTTP_X_TRACE_SPAN_ID' => span_id
         }
       end
       let(:span_context) { tracer.extract(described_class::FORMAT_RACK, carrier) }
