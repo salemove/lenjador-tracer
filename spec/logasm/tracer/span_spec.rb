@@ -17,6 +17,15 @@ RSpec.describe Logasm::Tracer::Span do
   let(:start_time) { Time.local(2017, 5, 1, 22, 10, 00) }
   let(:end_time) { start_time + duration_in_seconds }
 
+  describe '#operation_name=' do
+    it 'changes operation name' do
+      new_name = 'new-operation-name'
+      span.operation_name = new_name
+      span.finish
+      expect(logger).to have_received(:info).with("Span [#{new_name}] finished", anything)
+    end
+  end
+
   describe '#finish' do
     it 'logs out span information' do
       span.finish(end_time: end_time)
