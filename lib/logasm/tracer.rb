@@ -1,4 +1,3 @@
-require 'logasm/tracer/version'
 require 'logasm/tracer/span'
 require 'logasm/tracer/span_context'
 require 'logasm/tracer/trace_id'

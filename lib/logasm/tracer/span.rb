@@ -4,6 +4,8 @@ class Logasm
     class Span
       attr_reader :context
 
+      attr_writer :operation_name
+
       def initialize(context, operation_name, logger, start_time: Time.now, tags: {})
         @context = context
         @operation_name = operation_name
