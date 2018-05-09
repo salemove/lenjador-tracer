@@ -50,6 +50,15 @@ class Logasm
         @logger.info "Span [#{@operation_name}] #{event}", trace_information.merge(fields)
       end
 
+      # Add a log entry to this span
+      #
+      # @param timestamp [Time] time of the log
+      # @param fields [Hash] Additional information to log
+      def log_kv(timestamp: Time.now, **fields)
+        event = fields.fetch(:event, 'unknown')
+        @logger.info "Span [#{@operation_name}] #{event}", trace_information.merge(fields)
+      end
+
       # Finish the {Span}
       #
       # @param end_time [Time] custom end time, if not now
