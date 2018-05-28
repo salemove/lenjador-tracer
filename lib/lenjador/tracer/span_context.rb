@@ -1,4 +1,4 @@
-class Logasm
+class Lenjador
   class Tracer
     # SpanContext holds the data for a span that gets inherited to child spans
     class SpanContext

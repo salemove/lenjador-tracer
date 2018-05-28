@@ -1,4 +1,4 @@
-class Logasm
+class Lenjador
   class Tracer
     # https://github.com/opentracing/opentracing-ruby/blob/master/lib/opentracing/span.rb
     class Span
