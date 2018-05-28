@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "logasm/tracer"
+require "lenjador/tracer"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

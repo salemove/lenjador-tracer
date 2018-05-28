@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Logasm::Tracer do
+RSpec.describe Lenjador::Tracer do
   let(:tracer) { described_class.new(logger) }
 
   let(:logger) { spy('logger') }

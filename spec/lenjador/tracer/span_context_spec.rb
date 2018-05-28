@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Logasm::Tracer::SpanContext do
+RSpec.describe Lenjador::Tracer::SpanContext do
   describe '.create_from_parent_context' do
     let(:parent) do
       described_class.new(

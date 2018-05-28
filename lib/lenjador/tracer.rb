@@ -1,8 +1,8 @@
-require 'logasm/tracer/span'
-require 'logasm/tracer/span_context'
-require 'logasm/tracer/trace_id'
+require 'lenjador/tracer/span'
+require 'lenjador/tracer/span_context'
+require 'lenjador/tracer/trace_id'
 
-class Logasm
+class Lenjador
   # Implements OpenTracing API
   #
   # See https://github.com/opentracing/opentracing-ruby/blob/master/lib/opentracing.rb
@@ -54,7 +54,7 @@ class Logasm
         carrier['X-Trace-Parent-Id'] = span_context.parent_id
         carrier['X-Trace-Span-Id'] = span_context.span_id
       else
-        @logger.error "Logasm::Tracer with format #{format} is not supported yet"
+        @logger.error "Lenjador::Tracer with format #{format} is not supported yet"
       end
     end
 
@@ -86,7 +86,7 @@ class Logasm
           nil
         end
       else
-        @logger.error "Logasm::Tracer with format #{format} is not supported yet"
+        @logger.error "Lenjador::Tracer with format #{format} is not supported yet"
         nil
       end
     end

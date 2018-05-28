@@ -1,11 +1,11 @@
-# Logasm::Tracer
+# Lenjador::Tracer
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'logasm-tracer'
+gem 'lenjador-tracer'
 ```
 
 And then execute:
@@ -14,7 +14,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install logasm-tracer
+    $ gem install lenjador-tracer
 
 ## Usage
 
@@ -28,7 +28,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/salemove/logasm-tracer.
+Bug reports and pull requests are welcome on GitHub at https://github.com/salemove/lenjador-tracer.
 
 
 ## License

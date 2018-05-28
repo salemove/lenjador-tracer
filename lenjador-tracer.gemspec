@@ -3,7 +3,7 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
-  spec.name          = "logasm-tracer"
+  spec.name          = "lenjador-tracer"
   spec.version       = "0.3.0"
   spec.authors       = ["SaleMove TechMovers"]
   spec.email         = ["techmovers@salemove.com"]

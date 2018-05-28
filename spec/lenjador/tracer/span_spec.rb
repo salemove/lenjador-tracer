@@ -1,11 +1,11 @@
 
 require "spec_helper"
 
-RSpec.describe Logasm::Tracer::Span do
+RSpec.describe Lenjador::Tracer::Span do
   let(:span) { described_class.new(context, operation_name, logger, start_time: start_time) }
 
   let(:context) do
-    Logasm::Tracer::SpanContext.new(trace_id: trace_id, parent_id: parent_id, span_id: span_id)
+    Lenjador::Tracer::SpanContext.new(trace_id: trace_id, parent_id: parent_id, span_id: span_id)
   end
   let(:trace_id) { 'trace-id' }
   let(:parent_id) { 'parent-id' }
